@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -37,33 +38,14 @@ public class BaseConfiguration {
         String browser=prop.getProperty("browser");
         if(browser.equalsIgnoreCase("chrome"))
         {
-            ChromeOptions options=new ChromeOptions();
-//            options.setBinary("C://TEMP//Programs//Softwares//GoogleChromePortable//App//Chrome-bin//chrome.exe");
-            System.setProperty("webdriver.chrome.driver", "D://Learning//JARFiles//chromedriver.exe");
-            if(prop.getProperty("headless").equals("yes"))
-            {
-                ChromeOptions optionsHeadless=new ChromeOptions();
-                options.setHeadless(true);
-                driver=new ChromeDriver(optionsHeadless);
-            }
-            else
-            {
-                driver=new ChromeDriver(options);
-            }
+            WebDriverManager.chromedriver().setup();
+            driver=new ChromeDriver();
+        }
 
-        }else if(browser.equalsIgnoreCase("firefox"))
+        else if(browser.equalsIgnoreCase("firefox"))
         {
-            System.setProperty("webdriver.gecko.driver", "D://Learning//JARFiles//geckodriver.exe");
-            if(prop.getProperty("headless").equals("yes"))
-            {
-                FirefoxOptions options=new FirefoxOptions();
-                options.setHeadless(true);
-                driver=new FirefoxDriver(options);
-            }
-            else
-            {
-                driver=new FirefoxDriver();
-            }
+             WebDriverManager.firefoxdriver().setup();
+             driver=new FirefoxDriver();
 
         }
 
